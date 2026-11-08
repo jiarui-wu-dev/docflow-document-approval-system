@@ -1,0 +1,64 @@
+HELP.md
+# Local configuration, secrets, and generated diagnostics
+.env
+.env.*
+!.env.example
+*.log
+*.dump
+*.backup
+*.sql.gz
+*.dump.gz
+dump*.sql
+backup*.sql
+*.sqlite
+*.sqlite3
+*.hprof
+*.jks
+*.p12
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+coverage/
+__pycache__/
+*.py[cod]
+publication-work/
+frontend/node_modules/
+frontend/dist/
+frontend/*.log
+frontend/e2e-results/
+frontend/playwright-report/
+frontend/test-results/
+frontend/.env.e2e*
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

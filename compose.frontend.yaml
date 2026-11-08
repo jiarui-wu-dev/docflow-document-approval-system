@@ -1,0 +1,9 @@
+# Optional local frontend with same-origin API proxying.
+services:
+  frontend:
+    build: ./frontend
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:80"

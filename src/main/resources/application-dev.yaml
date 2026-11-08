@@ -1,0 +1,13 @@
+# Local development only; never activate this profile on a public deployment.
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+docflow:
+  dev-users:
+    enabled: ${DOCFLOW_DEV_USERS_ENABLED:false}
+    alice-password: ${DOCFLOW_ALICE_PASSWORD:}
+    bob-password: ${DOCFLOW_BOB_PASSWORD:}
+    admin-password: ${DOCFLOW_ADMIN_PASSWORD:}

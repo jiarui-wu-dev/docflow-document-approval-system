@@ -1,0 +1,16 @@
+.idea/
+.env
+.env.*
+publication-work/
+frontend/e2e-results/
+frontend/playwright-report/
+frontend/test-results/
+*.log
+*.dump
+*.backup
+frontend/node_modules/
+frontend/dist/
+.git/
+.gitignore
+README.md
+target/

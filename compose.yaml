@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-docflow_db}
+      POSTGRES_USER: ${POSTGRES_USER:-docflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in an ignored .env file or environment}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-docflow_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-docflow}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DOCFLOW_DEV_USERS_ENABLED: ${DOCFLOW_DEV_USERS_ENABLED:-false}
+      DOCFLOW_ALICE_PASSWORD: ${DOCFLOW_ALICE_PASSWORD:-}
+      DOCFLOW_BOB_PASSWORD: ${DOCFLOW_BOB_PASSWORD:-}
+      DOCFLOW_ADMIN_PASSWORD: ${DOCFLOW_ADMIN_PASSWORD:-}
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:8080/api/auth/me)\" = 401"]
+      interval: 5s
+      timeout: 5s
+      start_period: 30s
+      retries: 12
+
+volumes:
+  postgres_data:
